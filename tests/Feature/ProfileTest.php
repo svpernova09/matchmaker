@@ -32,4 +32,26 @@ class ProfileTest extends TestCase
 			->get($this->user->profilePath)
 			->assertRedirect('/login');
 	}
+
+	/** @test */
+	function a_male_user_with_no_images_has_a_male_avatar()
+	{
+		$this->signIn();
+
+		$user = create('App\User', ['gender' => 'male']);
+
+		$this->get($user->profilePath)
+			->assertSee('images/default_user_male.png');
+	}
+
+	/** @test */
+	function a_female_user_with_no_images_has_a_female_avatar()
+	{
+		$this->signIn();
+
+		$user = create('App\User', ['gender' => 'female']);
+
+		$this->get($user->profilePath)
+			->assertSee('images/default_user_female.png');
+	}
 }

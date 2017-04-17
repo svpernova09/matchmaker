@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
+            $table->enum('gender', ['male', 'female'])->default('male');
             $table->string('tagline', 255)->nullable();
             $table->text('profile')->nullable();
             $table->rememberToken();
