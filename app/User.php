@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password',
+        'username', 'email', 'password', 'tagline'
     ];
 
     /**
@@ -26,4 +26,24 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * A url to the user's profile.
+     * 
+     * @return string
+     */
+    public function getProfilePathAttribute()
+    {
+        return '/@' . $this->username;
+    }
+
+    /**
+     * Preserves line-breaks in user profile while sanitizing with htmlentities.
+     * 
+     * @return string
+     */
+    public function getFormattedProfileAttribute()
+    {
+        return nl2br(e($this->profile));
+    }
 }

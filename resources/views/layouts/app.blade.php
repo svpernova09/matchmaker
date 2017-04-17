@@ -19,6 +19,16 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+
+    <style type="text/css">
+        .profile_image {
+            display: inline-block;
+            width: 80%;
+            max-width: 225px;
+            height: auto;
+            margin: 15px;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -59,6 +69,7 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ Auth::user()->profilePath }}">My Profile</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
