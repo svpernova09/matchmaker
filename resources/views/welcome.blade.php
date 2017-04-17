@@ -9,6 +9,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Condiment" rel="stylesheet">
 
         <!-- Styles -->
         <style>
@@ -46,7 +47,10 @@
             }
 
             .title {
-                font-size: 84px;
+                font-size: 104px;
+                font-weight: bold;
+                font-family: 'Condiment', cursive;
+                text-transform: lowercase;
             }
 
             .links > a {
@@ -61,6 +65,13 @@
 
             .m-b-md {
                 margin-bottom: 30px;
+            }
+            
+            .logo {
+                height: 150%; 
+                width: auto; 
+                float: left;
+                margin-right: 5px;
             }
         </style>
     </head>
@@ -79,15 +90,8 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <img src="/images/love-icon.png" class="logo">
+                    {{ config('app.name', 'Laravel') }}
                 </div>
             </div>
         </div>

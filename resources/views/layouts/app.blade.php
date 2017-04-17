@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Condiment" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -27,6 +28,21 @@
             max-width: 225px;
             height: auto;
             margin: 15px;
+        }
+
+        .navbar-brand {
+            font-family: 'Condiment', cursive;
+            font-size: 35px;
+            line-height: 35px;
+            margin: 5px;
+            text-transform: lowercase;
+        }
+
+        .logo {
+            height: 150%; 
+            width: auto; 
+            float: left;
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -46,6 +62,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
+                        <img src="/images/love-icon.png" class="logo">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
