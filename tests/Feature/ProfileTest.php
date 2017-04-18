@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Photo;
 use Tests\TestCase;
 
 class ProfileTest extends TestCase
@@ -34,7 +35,7 @@ class ProfileTest extends TestCase
 	}
 
 	/** @test */
-	function a_male_user_with_no_images_has_a_male_avatar()
+	function a_male_user_with_no_photo_has_a_male_avatar()
 	{
 		$this->signIn();
 
@@ -45,7 +46,7 @@ class ProfileTest extends TestCase
 	}
 
 	/** @test */
-	function a_female_user_with_no_images_has_a_female_avatar()
+	function a_female_user_with_no_photo_has_a_female_avatar()
 	{
 		$this->signIn();
 
@@ -53,6 +54,20 @@ class ProfileTest extends TestCase
 
 		$this->get($user->profilePath)
 			->assertSee('images/default_user_female.png');
+	}
+
+	/** @test */
+	function a_user_with_a_photo_has_it_as_an_avatar()
+	{
+		$this->signIn($user = create('App\User'));
+
+		Photo::create([
+			'user_id' => $user->id,
+			'path' => 'uploaded_photo.png'
+		]);
+
+		$this->get($user->profilePath)
+			->assertSee('images/users/uploaded_photo.png');
 	}
 
 	/** @test */

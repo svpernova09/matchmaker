@@ -11,7 +11,7 @@
                     </a>
                 </h2>
                 
-                <img src="images/default_user_{{ $user->gender }}.png" class="profile_image">
+                <img src="{{ $user->avatar }}" class="profile_image">
             </div>
         </div>
 

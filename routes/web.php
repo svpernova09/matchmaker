@@ -21,3 +21,4 @@ Route::get('/home', 'HomeController@index');
 Route::get('/@{username}', 'ProfilesController@show');
 Route::get('/profile/edit', 'ProfilesController@edit');
 Route::post('/profile/edit', 'ProfilesController@update');
+Route::post('/photos', 'PhotosController@store');

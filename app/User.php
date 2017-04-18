@@ -46,4 +46,25 @@ class User extends Authenticatable
     {
         return nl2br(e($this->profile));
     }
+
+    public function getAvatarAttribute()
+    {
+        $avatar = $this->profileImage;
+
+        if ($avatar) {
+            return "images/users/{$avatar->path}";
+        }
+
+        return "images/default_user_{$this->gender}.png";
+    }
+
+    public function profileImage()
+    {
+        return $this->hasOne('App\Photo')->latest();
+    }
+
+    public function photos()
+    {
+        return $this->hasMany('App\Photo')->latest();
+    }
 }

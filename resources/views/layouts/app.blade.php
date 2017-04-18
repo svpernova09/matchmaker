@@ -82,6 +82,7 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <img src="/{{ Auth::user()->avatar }}" style="height: 35px; width: auto; border: 1px solid black; margin-right: 5px;">
                                     {{ Auth::user()->username }} <span class="caret"></span>
                                 </a>
 
