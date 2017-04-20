@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Uploads\UserPhoto;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
+use Mockery;
 
 class PhotoTest extends TestCase
 {
@@ -21,7 +23,7 @@ class PhotoTest extends TestCase
 	{
         $this->signIn($user = create('App\User'));
 
-        Storage::fake('images');
+        Storage::fake('local');
 
         $response = $this->json('POST', 'photos', [
             'photo' => UploadedFile::fake()->image('avatar.png')
@@ -31,6 +33,10 @@ class PhotoTest extends TestCase
 
         Storage::assertExists(
             'photos/' . $user->photos[0]->photo_path
+        );
+
+        Storage::assertExists(
+            'thumbnails/' . $user->photos[0]->photo_path
         );
 	}
 }

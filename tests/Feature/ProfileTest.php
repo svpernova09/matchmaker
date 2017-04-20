@@ -67,7 +67,7 @@ class ProfileTest extends TestCase
 		]);
 
 		$this->get($user->profilePath)
-			->assertSee('images/users/uploaded_photo.png');
+			->assertSee('images/thumbnails/uploaded_photo.png');
 	}
 
 	/** @test */

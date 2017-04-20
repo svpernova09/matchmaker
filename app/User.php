@@ -52,7 +52,7 @@ class User extends Authenticatable
         $avatar = $this->profileImage;
 
         if ($avatar) {
-            return "images/users/{$avatar->path}";
+            return "images/thumbnails/{$avatar->path}";
         }
 
         return "images/default_user_{$this->gender}.png";

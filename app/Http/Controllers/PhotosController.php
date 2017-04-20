@@ -13,6 +13,13 @@ class PhotosController extends Controller
 		$this->middleware('auth');
 	}
 
+    public function index()
+    {
+        $photos = Photo::whereUserId(auth()->id())->latest()->get();
+
+        return view('profile.photos', compact('photos'));
+    }
+
     public function store(Request $request)
     {
     	$this->validate($request, [
@@ -23,5 +30,7 @@ class PhotosController extends Controller
     		new UserPhoto($request->file('photo')),
             auth()->user()->id
     	);
+
+        return redirect()->back();
     }
 }
