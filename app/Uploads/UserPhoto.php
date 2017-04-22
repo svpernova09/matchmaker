@@ -18,7 +18,7 @@ class UserPhoto implements UploadInterface
 	{
 		$this->file = $file;
 
-		$this->fileName = time() . rand(100,9999) . '.' . $this->file->getClientOriginalExtension();
+		$this->fileName = time() . '-' . rand(100,9999) . '.' . $this->file->getClientOriginalExtension();
 	}
 
 	public function getFileName()
