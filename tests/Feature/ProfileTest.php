@@ -168,4 +168,37 @@ class ProfileTest extends TestCase
             'thumbnails/' . $user->photos[0]->photo_path
         );
 	}
+
+	/** @test */
+	function users_can_delete_their_photos()
+	{
+        Storage::fake('local');
+        $this->signIn($user = create('App\User'));
+        $this->json('POST', 'photos', ['photo' => UploadedFile::fake()->image('avatar.png')]);
+
+        $photo = $user->photos[0];
+        $photoName = $photo->path;
+        $this->json('DELETE', "photos/{$photo->id}");
+
+        $this->assertCount(0, $user->fresh()->photos);
+        Storage::assertMissing('photos/' . $photoName);
+        Storage::assertMissing('thumbnails/' . $photoName);
+	}
+
+	/** @test */
+	function users_cannot_delete_other_users_photos()
+	{
+        Storage::fake('local');
+        $this->signIn($user = create('App\User'));
+        $this->json('POST', 'photos', ['photo' => UploadedFile::fake()->image('avatar.png')]);
+        $photo = $user->photos[0];
+        $photoName = $photo->path;
+
+        $this->signIn();
+        $this->json('DELETE', "photos/{$photo->id}");
+
+        $this->assertCount(1, $user->fresh()->photos);
+        Storage::assertExists('photos/' . $photoName);
+        Storage::assertExists('thumbnails/' . $photoName);
+	}
 }

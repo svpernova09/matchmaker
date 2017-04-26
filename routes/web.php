@@ -23,3 +23,4 @@ Route::get('/profile/edit', 'ProfilesController@edit');
 Route::post('/profile/edit', 'ProfilesController@update');
 Route::get('/profile/photos', 'PhotosController@index');
 Route::post('/photos', 'PhotosController@store');
+Route::delete('/photos/{id}', 'PhotosController@destroy');

@@ -33,4 +33,13 @@ class PhotosController extends Controller
 
         return redirect()->back();
     }
+
+    public function destroy($id)
+    {
+        if ($photo = Photo::whereId($id)->whereUserId(auth()->id())->first()) {
+            $photo->delete();
+        }
+
+        return redirect()->back();
+    }
 }

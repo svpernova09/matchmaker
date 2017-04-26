@@ -29,7 +29,14 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     @forelse ($photos as $photo)
-                        <img src="/images/thumbnails/{{ $photo->path }}"> 
+                        <div style="display: inline-block; text-align: center;">
+                            <img src="/images/thumbnails/{{ $photo->path }}"> <br>
+                            <form method="POST" action="/photos/{{ $photo->id }}">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <button type="submit" class="btn btn-link">delete</button>
+                            </form>
+                        </div>
                     @empty
                         You haven't uploaded any photos yet.
                     @endforelse
