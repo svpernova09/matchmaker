@@ -29,8 +29,8 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     @forelse ($photos as $photo)
-                        <div style="display: inline-block; text-align: center;">
-                            <img src="/images/thumbnails/{{ $photo->path }}"> <br>
+                        <div style="display: inline-block; text-align: center; width: 175px;">
+                            <img src="/images/thumbnails/{{ $photo->path }}" style="width: 80%;"> <br>
                             <form method="POST" action="/photos/{{ $photo->id }}">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}

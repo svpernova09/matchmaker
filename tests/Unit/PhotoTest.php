@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Uploads\UserPhotoLimitException;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\UploadedFile;
@@ -35,6 +36,19 @@ class PhotoTest extends TestCase
         $this->assertCount(0, $this->user->fresh()->photos);
         Storage::assertMissing('photos/' . $photoName);
         Storage::assertMissing('thumbnails/' . $photoName);
+	}
+
+	/** @test */
+	function users_cant_have_more_than_4_photos()
+	{
+		$this->uploadPhoto();
+		$this->uploadPhoto();
+		$this->uploadPhoto();
+		$this->uploadPhoto();
+
+		$this->setExpectedException(UserPhotoLimitException::class);
+		
+		$this->uploadPhoto();
 	}
 
 	private function uploadPhoto()

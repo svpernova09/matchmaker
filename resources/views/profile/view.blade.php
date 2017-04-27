@@ -15,6 +15,22 @@
             </div>
         </div>
 
+        @if ($user->photos->count())
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-body" style="text-align: center;">
+                    @foreach ($user->photos as $photo)
+                        <img 
+                            class="small_image" 
+                            src="/images/thumbnails/{{ $photo->path }}" 
+                            data-featherlight="/images/users/{{ $photo->path }}"
+                        >
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        @endif
+        
         <div class="col-md-9">
             <div class="panel panel-default">
                 @if ($user->tagline )
@@ -28,6 +44,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 @endsection

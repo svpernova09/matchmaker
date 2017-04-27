@@ -33,6 +33,29 @@ class UserPhoto implements UploadInterface
 		);
 
     	$this->makeThumbnail($photo);
+    	
+    	$this->resizeImage($photo);
+	}
+
+	protected function resizeImage($photo)
+	{
+	 	$photo = Storage::get($photo);
+
+		if (! $photo) {
+			return;
+		}
+
+		$newPhoto = (string) Image::make($photo)
+			->resize(750, null, function ($constraint) {
+			    $constraint->aspectRatio();
+			    $constraint->upsize();
+			})
+			->stream();
+
+
+		Storage::put(
+			'photos/' . $this->fileName, $newPhoto, 'public'
+		);
 	}
 
 	protected function makeThumbnail($photo)

@@ -201,4 +201,19 @@ class ProfileTest extends TestCase
         Storage::assertExists('photos/' . $photoName);
         Storage::assertExists('thumbnails/' . $photoName);
 	}
+
+	/** @test */
+	function profiles_display_user_images()
+	{
+		$this->signIn($user = create('App\User'));
+
+		Photo::create(['user_id' => $user->id,'path' => 'uploaded_photo.png']);
+		Photo::create(['user_id' => $user->id,'path' => 'uploaded_photo1.png']);
+		Photo::create(['user_id' => $user->id,'path' => 'uploaded_photo2.png']);
+
+		$this->get($user->profilePath)
+			->assertSee('images/thumbnails/uploaded_photo.png')
+			->assertSee('images/thumbnails/uploaded_photo1.png')
+			->assertSee('images/thumbnails/uploaded_photo2.png');
+	}
 }

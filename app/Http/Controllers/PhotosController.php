@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Photo;
 use App\Uploads\UserPhoto;
+use App\Uploads\UserPhotoLimitException;
 use Illuminate\Http\Request;
 
 class PhotosController extends Controller
@@ -26,10 +27,16 @@ class PhotosController extends Controller
     		'photo' => 'required|mimes:jpg,jpeg,png,bmp,gif'
     	]);
 
-    	Photo::upload(
-    		new UserPhoto($request->file('photo')),
-            auth()->user()->id
-    	);
+        try {
+        	Photo::upload(
+        		new UserPhoto($request->file('photo')),
+                auth()->user()->id
+        	);            
+        }
+
+        catch (UserPhotoLimitException $e) {
+            return redirect()->back()->withErrors(['photo' => 'You can only have 4 photos.']);
+        }
 
         return redirect()->back();
     }

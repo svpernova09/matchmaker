@@ -30,6 +30,14 @@
             margin: 15px;
         }
 
+        .small_image {
+            display: inline-block;
+            max-width: 23%;
+            height: auto;
+            margin: 0.40vw;
+            cursor: pointer;
+        }
+
         .navbar-brand {
             font-family: 'Condiment', cursive;
             font-size: 35px;
@@ -88,7 +96,8 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="{{ Auth::user()->profilePath }}">My Profile</a></li>
-                                    <li><a href="profile/edit">Edit Profile</a></li>
+                                    <li><a href="/profile/photos">My Photos</a></li>
+                                    <li><a href="/profile/edit">Edit Profile</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
