@@ -60,11 +60,11 @@ class User extends Authenticatable
 
     public function profileImage()
     {
-        return $this->hasOne('App\Photo')->latest();
+        return $this->hasOne('App\Photo')->orderBy('position');
     }
 
     public function photos()
     {
-        return $this->hasMany('App\Photo')->latest();
+        return $this->hasMany('App\Photo')->orderBy('position');
     }
 }

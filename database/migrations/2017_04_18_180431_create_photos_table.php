@@ -17,6 +17,7 @@ class CreatePhotosTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('path');
+            $table->integer('position')->default(1);
             $table->timestamps();
         });
     }

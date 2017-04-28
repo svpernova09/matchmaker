@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Photo;
+use App\Photos\InvalidUsersPhotoException;
 use App\Uploads\UserPhoto;
 use App\Uploads\UserPhotoLimitException;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class PhotosController extends Controller
 
     public function index()
     {
-        $photos = Photo::whereUserId(auth()->id())->latest()->get();
+        $photos = auth()->user()->photos;
 
         return view('profile.photos', compact('photos'));
     }
@@ -36,6 +37,23 @@ class PhotosController extends Controller
 
         catch (UserPhotoLimitException $e) {
             return redirect()->back()->withErrors(['photo' => 'You can only have 4 photos.']);
+        }
+
+        return redirect()->back();
+    }
+
+    public function update($id, Request $request)
+    {
+        $this->validate($request, [
+            'position' => 'required|integer'
+        ]);
+
+        try {
+            Photo::updatePosition(auth()->user(), $id, $request->position);
+        } 
+
+        catch (InvalidUsersPhotoException $e) {
+            return redirect()->back()->withErrors(['position' => 'You can only reposition your photos.']);
         }
 
         return redirect()->back();

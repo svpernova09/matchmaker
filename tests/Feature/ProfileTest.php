@@ -73,6 +73,24 @@ class ProfileTest extends TestCase
 	}
 
 	/** @test */
+	function the_photo_in_the_first_position_is_the_avatar()
+	{
+		$this->signIn($user = create('App\User'));
+
+		Photo::create([
+			'user_id' => $user->id,
+			'path' => 'uploaded_photo1.png'
+		]);
+
+		Photo::create([
+			'user_id' => $user->id,
+			'path' => 'uploaded_photo2.png'
+		]);
+
+		$this->assertEquals('images/thumbnails/uploaded_photo1.png', $user->fresh()->getAvatarAttribute());
+	}
+
+	/** @test */
 	function users_can_update_their_profile()
 	{
 		$oldProfile = [
@@ -200,6 +218,32 @@ class ProfileTest extends TestCase
         $this->assertCount(1, $user->fresh()->photos);
         Storage::assertExists('photos/' . $photoName);
         Storage::assertExists('thumbnails/' . $photoName);
+	}
+
+	/** @test */
+	function users_can_rearrange_the_position_of_their_photos()
+	{
+        $this->signIn($user = create('App\User'));
+		$photo1 = Photo::create(['user_id' => $user->id,'path' => 'uploaded_photo.png']);
+		$photo2 = Photo::create(['user_id' => $user->id,'path' => 'uploaded_photo.png']);
+		$this->assertEquals(1, $photo1->fresh()->position);
+		$this->assertEquals(2, $photo2->fresh()->position);
+		
+        $this->json('POST', "/photos/{$photo2->id}", ['position'=>1]);
+
+		$this->assertEquals(1, $photo2->fresh()->position);
+		$this->assertEquals(2, $photo1->fresh()->position);
+	}
+
+	/** @test */
+	function users_cant_rearrange_the_position_of_other_users_photos()
+	{
+		$photo1 = Photo::create(['user_id' => '1000','path' => 'uploaded_photo.png']);
+
+        $this->signIn($user = create('App\User', ['id' => '1001']));
+        $response = $this->json('POST', "/photos/{$photo1->id}", ['position'=>1]);
+
+        $response->assertSessionHasErrors('position');
 	}
 
 	/** @test */
