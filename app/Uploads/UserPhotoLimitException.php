@@ -2,6 +2,7 @@
 
 namespace App\Uploads;
 
-class UserPhotoLimitException extends \RuntimeException {
-
-}
+/**
+ * The user has tried to upload more photos then they are allowed to.
+ */
+class UserPhotoLimitException extends \RuntimeException {}

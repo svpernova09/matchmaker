@@ -10,11 +10,21 @@ use Illuminate\Http\Request;
 
 class PhotosController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
 	public function __construct()
 	{
 		$this->middleware('auth');
 	}
 
+    /**
+     * Allows the authenticated user to manage their photos. Upload/Delete/Rearrange
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $photos = auth()->user()->photos;
@@ -22,6 +32,13 @@ class PhotosController extends Controller
         return view('profile.photos', compact('photos'));
     }
 
+    /**
+     * POST request for the authenticated user to upload a new photo.
+     * 
+     * @param  Illuminate\Http\Request $request
+     * 
+     * @return redirect
+     */
     public function store(Request $request)
     {
     	$this->validate($request, [
@@ -42,6 +59,14 @@ class PhotosController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * POST request for the authenticated user to re-order a photos position.
+     *
+     * @param integer  $id  The photos id.
+     * @param  Illuminate\Http\Request $request
+     * 
+     * @return redirect
+     */
     public function update($id, Request $request)
     {
         $this->validate($request, [
@@ -59,6 +84,13 @@ class PhotosController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * DELETE request for the authenticated user to remove an existing photo.
+     * 
+     * @param integer  $id  The photos id.
+     * 
+     * @return redirect
+     */
     public function destroy($id)
     {
         if ($photo = Photo::whereId($id)->whereUserId(auth()->id())->first()) {

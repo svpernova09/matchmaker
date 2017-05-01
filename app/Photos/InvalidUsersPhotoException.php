@@ -2,7 +2,7 @@
 
 namespace App\Photos;
 
-class InvalidUsersPhotoException extends \RuntimeException
-{
-	
-}
+/**
+ * The user has tried to update a photo that does not belong to them.
+ */
+class InvalidUsersPhotoException extends \RuntimeException {}

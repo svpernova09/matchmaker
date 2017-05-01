@@ -8,11 +8,23 @@ use Illuminate\Validation\Rule;
 
 class ProfilesController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
 	public function __construct()
 	{
 		$this->middleware('auth');
 	}
 
+    /**
+     * Display a users profile.
+     * 
+     * @param  string $username The users unique username.
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function show($username)
     {
     	$user = User::whereUsername($username)->firstOrFail();
@@ -20,6 +32,11 @@ class ProfilesController extends Controller
     	return view('profile.view', compact('user'));
     }
 
+    /**
+     * Display the authenticated users edit profile page.
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function edit()
     {
         $user = User::whereId(auth()->id())->first();
@@ -27,6 +44,13 @@ class ProfilesController extends Controller
         return view('profile.edit', compact('user'));
     }
 
+    /**
+     * POST request for the authenticated user to update their profile.
+     *
+     * @param  Illuminate\Http\Request $request
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request)
     {
     	$this->validate($request, [

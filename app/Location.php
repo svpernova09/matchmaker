@@ -9,8 +9,16 @@ class Location extends Model {
 
     use GeoDistanceTrait;
 
+    /**
+     * Turn off mass assignment protection.
+     * @var array
+     */
     protected $guarded = [];
 
+    /**
+     * Turn off timestamps for this model.
+     * @var boolean
+     */
     public $timestamps = false;
 
     /**

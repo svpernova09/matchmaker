@@ -10,10 +10,24 @@ use Intervention\Image\Facades\Image;
 
 class UserPhoto implements UploadInterface
 {
+	/**
+	 * The uploaded file.
+	 * 
+	 * @var object Illuminate\Http\UploadedFile
+	 */
 	protected $file;
 
+	/**
+	 * Unique filename to associate with the file.
+	 * @var string
+	 */
 	protected $fileName;
 
+	/**
+	 * Sets the file and fileName properties.
+	 * 
+	 * @param Illuminate\Http\UploadedFile $file
+	 */
 	public function __construct(UploadedFile $file)
 	{
 		$this->file = $file;
@@ -21,11 +35,21 @@ class UserPhoto implements UploadInterface
 		$this->fileName = time() . '-' . rand(100,9999) . '.' . $this->file->getClientOriginalExtension();
 	}
 
+	/**
+	 * Getter method to return the fileName property.
+	 * 
+	 * @return string
+	 */
 	public function getFileName()
 	{
 		return $this->fileName;
 	}
 
+	/**
+	 * The process to save the file to the server and create a thumbnail.
+	 * 
+	 * @return void
+	 */
 	public function store()
 	{
     	$photo = Storage::putFileAs(
@@ -37,6 +61,12 @@ class UserPhoto implements UploadInterface
     	$this->resizeImage($photo);
 	}
 
+	/**
+	 * Resizes the orriginal image and replaces it.
+	 * 
+	 * @param  string $photo 	path to photo
+	 * @return void
+	 */
 	protected function resizeImage($photo)
 	{
 	 	$photo = Storage::get($photo);
@@ -58,6 +88,12 @@ class UserPhoto implements UploadInterface
 		);
 	}
 
+	/**
+	 * Creates a thumbnail of the photo and stores it.
+	 * 
+	 * @param  string $photo 	path to photo
+	 * @return void
+	 */
 	protected function makeThumbnail($photo)
 	{
 	 	$photo = Storage::get($photo);

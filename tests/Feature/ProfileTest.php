@@ -19,6 +19,14 @@ class ProfileTest extends TestCase
 	}
 
 	/** @test */
+	function unauthenticated_users_can_not_view_profiles()
+	{
+		$this->withExceptionHandling()
+			->get($this->user->profilePath)
+			->assertRedirect('/login');
+	}
+
+	/** @test */
 	function authenticated_users_have_profiles()
 	{
 		$this->signIn($this->user)
@@ -26,14 +34,6 @@ class ProfileTest extends TestCase
 			->assertSee($this->user->username)
 			->assertSee($this->user->tagline)
 			->assertSee($this->user->profile);
-	}
-
-	/** @test */
-	function unauthenticated_users_can_not_view_profiles()
-	{
-		$this->withExceptionHandling()
-			->get($this->user->profilePath)
-			->assertRedirect('/login');
 	}
 
 	/** @test */

@@ -47,6 +47,11 @@ class User extends Authenticatable
         return nl2br(e($this->profile));
     }
 
+    /**
+     * Returns the public path to the users avatar.
+     * 
+     * @return string
+     */
     public function getAvatarAttribute()
     {
         $avatar = $this->profileImage;
@@ -58,11 +63,21 @@ class User extends Authenticatable
         return "images/default_user_{$this->gender}.png";
     }
 
+    /**
+     * Returns the users profile image.
+     * 
+     * @return App\Photo
+     */
     public function profileImage()
     {
         return $this->hasOne('App\Photo')->orderBy('position');
     }
 
+    /**
+     * Returns a collection of a users photos.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function photos()
     {
         return $this->hasMany('App\Photo')->orderBy('position');
