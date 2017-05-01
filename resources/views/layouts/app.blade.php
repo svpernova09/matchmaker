@@ -52,6 +52,27 @@
             float: left;
             margin-right: 5px;
         }
+
+        .image-list {
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .image-list li {
+            padding-top: 10px;
+            list-style-type: none;
+            display: inline-block;
+        }
+
+        .image-list li div {
+            display: inline-block; 
+            text-align: center; 
+            width: 175px;
+        }
+
+        .image-list li div img {
+            width: 80%;
+        }
     </style>
 </head>
 <body>
@@ -122,5 +143,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    @yield('javascript')
 </body>
 </html>
